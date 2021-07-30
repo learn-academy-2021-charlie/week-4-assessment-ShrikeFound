@@ -7,7 +7,7 @@ Then, research the question to expand on your answer. Even if you feel you have 
 
 1. What is an instance variable in Ruby? How is it different from other variables?
 
-  Your answer:
+  Your answer: a variable that is restricted to specific instances of a class
 
   Researched answer:
 
@@ -15,7 +15,7 @@ Then, research the question to expand on your answer. Even if you feel you have 
 
 2. What is a block in Ruby?
 
-  Your answer:
+  Your answer: ruby blocks are anonymous functions, and are used similarly to how anonymous functions are used in javascript methods like .map() or for loops.
 
   Researched answer:
 
@@ -23,7 +23,7 @@ Then, research the question to expand on your answer. Even if you feel you have 
 
 3. Ruby has an implicit return. What does that mean?
 
-  Your answer:
+  Your answer: ruby will return the last expression of a block unless the return keyword is used to make an explicit return.
 
   Researched answer:
 
@@ -31,7 +31,7 @@ Then, research the question to expand on your answer. Even if you feel you have 
 
 4. What is object-oriented programming? How is it different than functional programming?
 
-  Your answer:
+  Your answer: a programming framework based around using objects that contain data and behavior, where functional programming is based around using functions that take an input and return an output.
 
   Researched answer:
 
@@ -39,7 +39,7 @@ Then, research the question to expand on your answer. Even if you feel you have 
 
 5. What is the difference between a class and an object?
 
-  Your answer:
+  Your answer: an object is a collection of methods and variables independent of other objects; a class is a blueprint for objects.
 
   Researched answer:
 
@@ -47,7 +47,7 @@ Then, research the question to expand on your answer. Even if you feel you have 
 
 6. STRETCH: What is `attr_accessor`?
 
-  Your answer:
+  Your answer: a method(I think?) that creates a getter method and setter method for the properties we pass to it.
 
   Researched answer:
 
@@ -55,12 +55,12 @@ Then, research the question to expand on your answer. Even if you feel you have 
 
 ## Looking Ahead: Terms for Next Week
 
-1. PostgreSQL:
+1. PostgreSQL: a database system
  
-2. Ruby on Rails:
+2. Ruby on Rails: an MVC backend framework for ruby
 
-3. CRUD:
+3. CRUD: actions we can perform with our data: Create, Read, Update, Delete
 
-4. ORM:
+4. ORM: object-relational mapping, a method of converting data to objects we can manipulate with a programming language
 
-5. Active Record:
+5. Active Record: a type of ORM that rails uses so that we can manpulate data store in a database as objects using ruby
