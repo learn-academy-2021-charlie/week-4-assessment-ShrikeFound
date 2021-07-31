@@ -102,35 +102,35 @@ describe("removeAndShuffle",() =>{
 //this is their implementation. gonna break it down before I try it myself:
 
 //function takes an array
-function shuffle(array) {
-    //initialize 3 variables: 
-    //m = array length
-    //i = random index
-    //t = temporary holder.
-    //not sure why they don't use more descriptive variable names.
+// function shuffle(array) {
+//     //initialize 3 variables: 
+//     //m = array length
+//     //i = random index
+//     //t = temporary holder.
+//     //not sure why they don't use more descriptive variable names.
 
-    var m = array.length, t, i;
+//     var m = array.length, t, i;
 
-    // While there remain elements to shuffle…
-    while (m) {
+//     // While there remain elements to shuffle…
+//     while (m) {
   
-      // Pick a remaining element…
-      //you're also decrementing the m variable 
-      //so next time around the numbers you can pick from are less.
-      i = Math.floor(Math.random() * m--);
+//       // Pick a remaining element…
+//       //you're also decrementing the m variable 
+//       //so next time around the numbers you can pick from are less.
+//       i = Math.floor(Math.random() * m--);
         
-      // And swap it with the current element.
-      //temporary holder holds value of last element (index m)
-      t = array[m];
-      //last element holds value of element at index i
-      array[m] = array[i];
-      //element at index i holds temp
-      array[i] = t;
-    }
+//       // And swap it with the current element.
+//       //temporary holder holds value of last element (index m)
+//       t = array[m];
+//       //last element holds value of element at index i
+//       array[m] = array[i];
+//       //element at index i holds temp
+//       array[i] = t;
+//     }
   
-    //return array that's been shuffled in-place.
-    return array;
-  }
+//     //return array that's been shuffled in-place.
+//     return array;
+//   }
 
 
 //one more time for my benefit:
@@ -230,11 +230,13 @@ const minMax = (array) =>{
 
 var testArray1 = [3, 7, 10, 5, 4, 3, 3]
 var testArray2 = [7, 8, 2, 3, 1, 5, 4]
+var testArray3 = [17, 8, 2, 13, 11, 15, 4]
 // Expected output: [3, 7, 10, 5, 4, 8, 2, 1]
 
 describe("consolidateArrays",() =>{
     it("returns 1 array with no duplicate values",() =>{
         expect(consolidateArrays(testArray1,testArray2)).toEqual([3, 7, 10, 5, 4, 8, 2, 1])
+        expect(consolidateArrays(testArray1,testArray2,testArray3)).toEqual([3,  7, 10,  5,  4, 8,  2,  1, 17, 13, 11, 15])
     })
 })
 
@@ -250,16 +252,56 @@ describe("consolidateArrays",() =>{
 // return placeholder
 
 
-const consolidateArrays = (arrayOne,arrayTwo) =>{
-    const result = []
-    combinedArray = arrayOne.concat(arrayTwo)
+// const consolidateArrays = (arrayOne,arrayTwo) =>{
+//     const result = []
+//     combinedArray = arrayOne.concat(arrayTwo)
 
-    for(let i = 0; i < combinedArray.length; i++){
-        if (!result.includes(combinedArray[i])){
-            result.push(combinedArray[i])
+//     for(let i = 0; i < combinedArray.length; i++){
+//         if (!result.includes(combinedArray[i])){
+//             result.push(combinedArray[i])
+//         }
+//     }
+
+//     return result
+
+// }
+
+// STRETCH: Use the spread operator to pass in a dynamic number of arguments.
+
+const consolidateArrays = (...allArrays) =>{
+    // console.log(allArrays)
+    //we get an array, so we can use methods like reduce.
+    const flattenedArray = allArrays.reduce((newArray,smallArray) =>{
+        return newArray.concat(smallArray)
+    },[])
+    // console.log(flattenedArray)
+    const result = []
+
+    for (let i = 0; i < flattenedArray.length; i++){
+        if (!result.includes(flattenedArray[i])){
+            result.push(flattenedArray[i])
         }
     }
-
     return result
 
 }
+
+//as of ES6 we can use a Set object. Sets are collections of unique values, so if we convert an array to a set it will implicitly remove any duplicates.
+
+
+// const consolidateArrays = (...allArrays) =>{
+//     // console.log(allArrays)
+//     //we get an array, so we can use methods like reduce.
+//     const flattenedArray = allArrays.reduce((newArray,smallArray) =>{
+//         return newArray.concat(smallArray)
+//     },[])
+//     // console.log(flattenedArray)
+//     //convert array to set
+//     const setResult = new Set(flattenedArray)
+//     // convert set to array 
+//     result = [...setResult]
+//     return result
+
+// }
+
+//I prefer the loop
