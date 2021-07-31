@@ -25,7 +25,31 @@ Then, research the question to expand on your answer. Even if you feel you have 
 
   **Your answer:** ruby will return the last expression of a block unless the return keyword is used to make an explicit return.
 
-  **Researched answer:**
+  **Researched answer:** explicit returns end a method, so using one inside a block might give us unexpected results. using the first ruby challenge as an example:
+
+  ```ruby
+
+    def words_with_letter (array,letter)
+        array.select do |word| 
+            #javascript would require an explicit return here since we're on multiple lines
+            word.include? letter
+        end
+    end
+
+    words_with_letter(beverages_array,'t')
+    #returns an filtered array, as expected
+
+    def words_with_letter (array,letter)
+        array.select do |word| 
+            #using an explicit return in ruby here ends the entire method
+            return word.include? letter
+        end
+    end
+
+    words_with_letter(beverages_array,'t')
+    #returns 'false', the evaluation of the expression `word.include ? letter`
+
+  ```
 
 
 
