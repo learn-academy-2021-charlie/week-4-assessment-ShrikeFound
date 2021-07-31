@@ -143,26 +143,28 @@ describe("removeAndShuffle",() =>{
 //gonna try it with a for loop.
 
 //function takes an array
-const removeAndShuffle = (array) =>{
-    //new array with one less element
-    newArray = array.slice(1) 
+//new array with one less element
+//length-1 because that's the value of the last index. leaving it at array.length shuffles in an undefined element.
+//temp holds value at current last index
+//instead of grabbing a random location from the entire array (like my original function)
+//we're just grabbing one from the remaining items
+//last element replaced with random element
+//random element replaced with last element
 
-    //length-1 because that's the value of the last index. leaving it at array.length shuffles in an undefined element.
+    const removeAndShuffle = (array) =>{
+    
+    const newArray = array.slice(1) 
+
     for(let i = newArray.length-1; i > 0; i--){
-        
-        //temp holds value at current last index
+    
         let temp = newArray[i]
-
-        //instead of grabbing a random location from the entire array (like my original function)
-        //we're just grabbing one from the remaining items
         let randomLocation = Math.floor(Math.random() * i)
 
-        //last element replaced with random element
         newArray[i] = newArray[randomLocation]
-        //random element replaced with last element
         newArray[randomLocation] = temp
 
     }
+
     return newArray
 
 }
