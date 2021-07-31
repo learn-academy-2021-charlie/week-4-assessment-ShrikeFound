@@ -1,7 +1,5 @@
 // ASSESSMENT 4: JavaScript Coding Practical Questions with Jest
 
-const { result } = require("lodash")
-
 // Please read all questions thoroughly
 // Pseudo coding is REQUIRED
 // If you get stuck, please leave comments to help us understand your thought process
@@ -37,41 +35,139 @@ describe("removeAndShuffle",() =>{
     })
     // we can use NOT to check whether an array doesn't match.
     //first checks to make sure .toEqual passed, then added .not
-    it("returns array in different order",() =>{
+    it("returns array that doesn't match",() =>{
         expect(removeAndShuffle(colors1)).not.toEqual(colors1.slice(1))
         expect(removeAndShuffle(colors2)).not.toEqual(colors2.slice(1))
+    })
+    //the above test makes sure the two arrays are different, but this one makes sure that the two arrays WOULD match if they were ont eh same order.
+
+    //I think technically I would only need this one/ should only use this one, since a shuffle 
+    //might still return an array in the same order (which means my second test would fail). I'd only need the test above if we needed to return an array in different order.
+    //still, happy to have used a little more of the jest syntax.
+
+    //Keeping the other tests because I like all of the green check marks.
+    
+    it("returns array WOULD match if sorted",() =>{
+        expect(removeAndShuffle(colors1).sort()).toEqual(colors1.slice(1).sort())
+        expect(removeAndShuffle(colors2).sort()).toEqual(colors2.slice(1).sort())
     })
 })
 
 // b) Create the function that makes the test pass.
 
 //function takes an array
+
+// const removeAndShuffle = (array) =>{
+//     // return array from index 1 up
+//     newArray = array.slice(1)
+
+//     //using something from a shuffle functin I've tried before 
+//     //https://github.com/ShrikeFound/Lucius-Bot/blob/main/dealer.js
+//     // the idea is that we loop through the array an arbitrary amount of times
+//     // each time, grabbing the first item in the array
+//     // and replacing it with a random element in the array.
+//     // 1000 times worked fine for a deck of 54, so should work for arrays of 4/6
+    
+//     //get random number for index
+//     //temporarily hold value of first index
+//     //replace first index with value of random index
+//     //replace random index with value of first index (held in temporary variable)
+//     //return newly shuffle array
+
+//     for (let i = 0; i < 1000; i++) {
+       
+//         let randomLocation = Math.floor(Math.random() * newArray.length)
+//         let temp = newArray[0]
+
+//         newArray[0] = newArray[randomLocation]
+
+//         newArray[randomLocation] = temp
+//       }
+
+
+//       return newArray
+// }
+
+
+//will look for maybe a neater way to do it
+//Apparently this problem has been solved for years. 
+//The Fisher-Yates Algorithm:
+//there's a really cool page on this here:
+// https://bost.ocks.org/mike/shuffle/
+//from the page:
+//To implement the in-place O(n) shuffle, then, pick a random remaining element (from the
+//front) and place in its new location (in the back). The unshuffled element in the back is
+//swapped to the front, where it waits for subsequent shuffling.
+
+//this is their implementation. gonna break it down before I try it myself:
+
+//function takes an array
+function shuffle(array) {
+    //initialize 3 variables: 
+    //m = array length
+    //i = random index
+    //t = temporary holder.
+    //not sure why they don't use more descriptive variable names.
+
+    var m = array.length, t, i;
+
+    // While there remain elements to shuffle…
+    while (m) {
+  
+      // Pick a remaining element…
+      //you're also decrementing the m variable 
+      //so next time around the numbers you can pick from are less.
+      i = Math.floor(Math.random() * m--);
+        
+      // And swap it with the current element.
+      //temporary holder holds value of last element (index m)
+      t = array[m];
+      //last element holds value of element at index i
+      array[m] = array[i];
+      //element at index i holds temp
+      array[i] = t;
+    }
+  
+    //return array that's been shuffled in-place.
+    return array;
+  }
+
+
+//one more time for my benefit:
+//we have an array.
+//we store the value of its original length, which we use as a counter.
+//pretty sure we could just use a for loop here.
+//from there, we choose a random element from 0 to the current index
+//swap it with the current index
+
+//gonna try it with a for loop.
+
+//function takes an array
 const removeAndShuffle = (array) =>{
-    // return array from index 1 up
-    newArray = array.slice(1)
+    //new array with one less element
+    newArray = array.slice(1) 
 
-    //using something from a shuffle functin I've tried before 
-    //https://github.com/ShrikeFound/Lucius-Bot/blob/main/dealer.js
-    // the idea is that we loop through the array an arbitrary amount of times
-    // each time, grabbing the first item in the array
-    // and replacing it with a random element in the array.
-    // 1000 times worked fine for a deck of 54, so should work for arrays of 4/6
-    for (let i = 0; i < 1000; i++) {
-        //get random number fo rindex
-        let randomLocation = Math.floor(Math.random() * newArray.length);
-        //temporarily hold value of first index
-        let temp = newArray[0];
-        //replace first index with value of random index
-        newArray[0] = newArray[randomLocation];
-        //replace random index with value of first index (held in temporary variable)
-        newArray[randomLocation] = temp;
-      }
+    //length-1 because that's the value of the last index. leaving it at array.length shuffles in an undefined element.
+    for(let i = newArray.length-1; i > 0; i--){
+        
+        //temp holds value at current last index
+        let temp = newArray[i]
 
+        //instead of grabbing a random location from the entire array (like my original function)
+        //we're just grabbing one from the remaining items
+        let randomLocation = Math.floor(Math.random() * i)
 
-    //will look for maybe a neater way to do it
-      //return newly shuffle array
-      return newArray
+        //last element replaced with random element
+        newArray[i] = newArray[randomLocation]
+        //random element replaced with last element
+        newArray[randomLocation] = temp
+
+    }
+    return newArray
+
 }
+
+
 
 
 // --------------------2) Create a function that takes an array of numbers and returns an array of the minimum and maximum numbers in that order.
