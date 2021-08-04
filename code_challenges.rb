@@ -10,6 +10,18 @@ letter_t = 't'
 # Expected output: ['tea', 'water', 'soda water']
 
 
+#function takes an array of words and a letter
+#filter (using .select)
+#for words that .include? the chosen letter 
+#implicit return means we don't need to add return
+def words_with_letter (array,letter)
+    array.select{|word| word.include? letter}
+end
+
+puts "\ntest for leter 'o':"
+puts words_with_letter(beverages_array,'o')
+puts "\ntest for letter 't':"
+puts words_with_letter(beverages_array,'t')
 
 # -------------------2) Create a method that takes in a string and removes all the vowels from the string. Use the test variables provided. HINT: Check out this resource: https://ruby-doc.org/core-2.6/String.html#method-i-delete
 
@@ -20,15 +32,94 @@ album2 = 'Sgt Pepper'
 album3 = 'Abbey Road'
 # Expected output: 'bby Rd'
 
+#function that takes a string
+    # .delete "Returns a copy of str with all characters in the intersection of its 
+    # arguments #deleted. Uses the same rules for building the set of characters as 
+    # String#count."
+
+    #unfamliar with string#count, but #delete seems to take 2 strings, and return
+    #only the characters that don't overlap.
+    #so i'm checking for upper and lower case vowels.
+
+def remove_vowels string 
+    string.delete "aeiouAEIOU"
+end
+
+    #implicit return and all that, but adding return is a habit. 
+    #check later if implicit reutrn is best practice.
+    #couldn't find anything. I noticed that I used implicit return in the method above
+    #and explicit for this one. gonna try to be more consistent.
+
+#testing, adding some lines to break it up.
+puts ""
+puts "======================="
+puts "" 
+puts remove_vowels album1
+puts remove_vowels album2 
+puts remove_vowels album3
 
 
 # --------------------3a) Create a class called Bike that is initialized with a model, wheels, and current_speed. The default number of wheels is 2. The current_speed should start at 0. Create a get_info method that returns a sentence with all the data from the bike object.
 
 # Expected output example: 'The Trek bike has 2 wheels and is going 0 mph.'
 
+#class Bike
+class Bike 
+    attr_accessor :model
+    #initialize method has 3 instance variables: model, wheels, current_speed
+    def initialize 
+        @model = "Generic"
+        @wheels = 2 
+        @current_speed = 0
+    end
 
+    #get info method puts a string with the bike's information
+    #removed the puts so it returns the string isntead
+    def get_info 
+        "The #{@model} bike has #{@wheels} wheels and is going #{@current_speed} mph."
+    end
+end
+
+
+puts ""
+puts "======================="
+puts "" 
+my_bike = Bike.new 
+my_bike.model = 'Trek'
+puts my_bike.get_info
 
 # -------------------3b) Add the ability to pedal faster and brake. The pedal_faster method should increase the speed. The brake method should decrease the speed. The bike cannot go negative speeds.
+
+
+#inherit? come back to this. copy and pasting for now.
+class BetterBike < Bike
+    def initialize 
+        super
+    end
+
+    # don't need this method if I inherit from bike
+    # def get_info 
+    #     "The #{@model} bike has #{@wheels} wheels and is going #{@current_speed} mph."
+    # end
+
+    def pedal_faster speed
+        @current_speed += speed
+    end
+
+    def brake speed
+        @current_speed -= speed 
+        if @current_speed < 0 
+            @current_speed = 0
+        end
+    end
+end
+
+my_bike = BetterBike.new
+my_bike.pedal_faster 10
+puts my_bike.get_info
+my_bike.brake 15
+puts my_bike.get_info
+
 
 # Expected output example: my_bike.pedal_faster 10 => 10
 # Expected output example: my_bike.brake 15 => 0
